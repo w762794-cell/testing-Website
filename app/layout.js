@@ -1,23 +1,14 @@
+import "./globals.css";
+
 export const metadata = {
-  title: "MP3 to Khmer SRT",
-  description: "បំលែងឯកសារ MP3 ជាចំណងជើងរង (SRT) ភាសាខ្មែរ",
+  title: "កម្មវិធីបកប្រែ SRT ចិន→ខ្មែរ",
+  description: "Translate Chinese SRT subtitles into natural Khmer",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="km">
-      <body
-        style={{
-          margin: 0,
-          fontFamily:
-            "'Khmer OS', 'Noto Sans Khmer', system-ui, -apple-system, sans-serif",
-          background: "#0f172a",
-          color: "#e2e8f0",
-          minHeight: "100vh",
-        }}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
