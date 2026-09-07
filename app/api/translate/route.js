@@ -16,7 +16,7 @@ export async function POST(req) {
       );
     }
 
-    const modelName = model || process.env.GEMINI_MODEL || "gemini-2.0-flash";
+    const modelName = model || process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
     const numbered = lines
       .map((t, i) => `${i + 1}: ${String(t).replace(/\n/g, " / ")}`)
