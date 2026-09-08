@@ -92,7 +92,7 @@ export default function Home() {
 
       <div style={{ margin: "16px 0" }}>
         <label style={{ display: "block", marginBottom: 6, fontSize: 14 }}>
-          Gemini API Key (ទុកទទេប្រសិនបើម៉ាស៊ីនមេបានកំណត់រួចហើយ)
+          Groq API Key (ទុកទទេប្រសិនបើម៉ាស៊ីនមេបានកំណត់រួចហើយ)
         </label>
         <input
           type="password"
