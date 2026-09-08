@@ -16,7 +16,7 @@ export async function POST(req) {
       );
     }
 
-    const modelName = model || process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+    const modelName = model || process.env.GROQ_MODEL || "llama-3.1-8b-instant";
 
     const numbered = lines
       .map((t, i) => `${i + 1}: ${String(t).replace(/\n/g, " / ")}`)
