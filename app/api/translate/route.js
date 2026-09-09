@@ -8,15 +8,15 @@ export async function POST(req) {
       return Response.json({ error: "No lines provided" }, { status: 400 });
     }
 
-    const key = apiKey || process.env.GROQ_API_KEY;
+    const key = apiKey || process.env.GEMINI_API_KEY;
     if (!key) {
       return Response.json(
-        { error: "Missing Groq API key. Set GROQ_API_KEY or provide one in the form." },
+        { error: "Missing Gemini API key. Set GEMINI_API_KEY or provide one in the form." },
         { status: 400 }
       );
     }
 
-    const modelName = model || process.env.GROQ_MODEL || "llama-3.1-8b-instant";
+    const modelName = model || process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
     const numbered = lines
       .map((t, i) => `${i + 1}: ${String(t).replace(/\n/g, " / ")}`)
@@ -31,31 +31,29 @@ export async function POST(req) {
 ជួរចូល៖
 ${numbered}`;
 
-    const url = "https://api.groq.com/openai/v1/chat/completions";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
 
     const resp = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: modelName,
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.3,
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.3 },
       }),
     });
 
     if (!resp.ok) {
       const errText = await resp.text();
       return Response.json(
-        { error: `Groq API error: ${resp.status} ${errText}` },
+        { error: `Gemini API error: ${resp.status} ${errText}` },
         { status: 502 }
       );
     }
 
     const data = await resp.json();
-    const outText = data?.choices?.[0]?.message?.content || "";
+    const outText =
+      data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("\n") ||
+      "";
 
     const resultMap = {};
     outText.split("\n").forEach((line) => {
